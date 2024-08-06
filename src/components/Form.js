@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import "./Form.css";
-import radioSvg from "./assets/images/icon-radio-selected.svg";
-import checkSvg from "./assets/images/icon-checkbox-check.svg";
-import { validateEmail } from "./Utils";
+import "../styles/Form.css";
+import radioSvg from "../assets/images/icon-radio-selected.svg";
+import checkSvg from "../assets/images/icon-checkbox-check.svg";
+import { validateEmail } from "../Utils";
 
-const Form = () => {
+const Form = ({ setFormSuccess }) => {
   const [activeRadio, setActiveRadio] = useState(null);
   const [activeCheckBox, setActiveCheckBox] = useState(false);
   const [fieldInput, setFieldInput] = useState({
@@ -48,30 +48,36 @@ const Form = () => {
     const emailAddressMessage = "Please enter a valid email address";
     const consentMessage =
       "To submit this form, please consent to being contacted";
-
+    //check error message in error message object
+    let isValid = true;
+    //validate field inputs
     if (fieldInput["first-name"] === "") {
       setErrorMessage((errorMessage) => ({
         ...errorMessage,
         firstNameError: fieldMessage,
       }));
+      isValid = false;
     }
     if (fieldInput["last-name"] === "") {
       setErrorMessage((errorMessage) => ({
         ...errorMessage,
         lastNameError: fieldMessage,
       }));
+      isValid = false;
     }
     if (fieldInput["email-address"] === "") {
       setErrorMessage((errorMessage) => ({
         ...errorMessage,
         emailAddressError: fieldMessage,
       }));
+      isValid = false;
     } else {
       if (!validateEmail(fieldInput["email-address"])) {
         setErrorMessage((errorMessage) => ({
           ...errorMessage,
           emailAddressError: emailAddressMessage,
         }));
+        isValid = false;
       }
     }
     if (activeRadio === null) {
@@ -79,18 +85,27 @@ const Form = () => {
         ...errorMessage,
         queryTypeError: queryTypeMessage,
       }));
+      isValid = false;
     }
     if (fieldInput["message"] === "") {
       setErrorMessage((errorMessage) => ({
         ...errorMessage,
         messageError: fieldMessage,
       }));
+      isValid = false;
     }
     if (!activeCheckBox) {
       setErrorMessage((errorMessage) => ({
         ...errorMessage,
         consentError: consentMessage,
       }));
+      isValid = false;
+    }
+    //set the form succession
+    if (!isValid) {
+      setFormSuccess(false);
+    } else {
+      setFormSuccess(true);
     }
   };
   //handle on change field inputs
@@ -100,11 +115,9 @@ const Form = () => {
       [e.target.name]: e.target.value,
     });
   };
-  // set empty effect for states
-  useEffect(() => {
-    setActiveRadio(null);
-    setActiveCheckBox(false);
-  }, []);
+  // // set empty effect for states
+  // useEffect(() => {
+  // }, []);
   return (
     <>
       <form action="" id="form" onSubmit={handleFormSubmit}>

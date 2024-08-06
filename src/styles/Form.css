@@ -135,6 +135,30 @@
   color: var(--primary-green-medium);
   cursor: pointer;
 }
+.form-success {
+  display: flex;
+  justify-content: center;
+}
+.form-success-container {
+  background: var(--grey-darker);
+  padding: 1.4rem 1.3rem;
+  color: var(--neutral-white);
+  border-radius: 12px;
+}
+.message-sent-container {
+  margin-bottom: 14px;
+}
+.message-sent-container svg,
+.message-sent-container span {
+  vertical-align: middle;
+  font-weight: bold;
+}
+.message-sent-container svg {
+  margin-right: 10px;
+}
+.form-success.hide {
+  display: none;
+}
 /* MEDIA QUERY FOR ALL TYPES OF SCREEN  */
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
